@@ -5,9 +5,9 @@ class Todos extends Component {
     render() {
         let doneTodoItems;
         if(this.props.doneTodos) {
-            doneTodoItems = this.props.doneTodos.map(doneTodo => {
+            doneTodoItems = this.props.doneTodos.map((doneTodo, i) => {
                 return (
-                    <DoneItem doneTodo={doneTodo} />
+                    <DoneItem key={i} doneTodo={doneTodo} />
                 );
             });
         }
@@ -15,7 +15,7 @@ class Todos extends Component {
             <div className="row">
                 <div className="col-md-2"></div>
                 <div className="col-md-8 doneTodos">
-                    <h1 className="h5">Done Todos</h1>
+                    <h1 className="h5">Done Items</h1>
                     <ul className="list-group">
                         {doneTodoItems}
                     </ul>
