@@ -8,27 +8,10 @@ class App extends Component {
 	constructor() {
 		super();
 		this.state = {
-			projects: [],
       todos: ['Dapibus ac facilisis in', 'Morbi leo risus', 'Porta ac consectetur ac'],
       doneTodos: ['Dapibus ac facilisis in', 'Morbi leo risus', 'Porta ac consectetur ac']
 		}
 	}
-
-	// getTodos() {
-	// 	$.ajax({
-	// 		url: 'https://jsonplaceholder.typicode.com/todos',
-	// 		dataType: 'json',
-	// 		cache: false,
-	// 		success: function(data) {
-	// 			this.setState({todos: data}, function() {
-	// 				console.log(this.state);
-	// 			})
-	// 		}.bind(this),
-	// 		error: function(xhr, status, err){
-	// 			console.log(err);
-	// 		}
-	// 	});
-	// }
 
 	render() {
 		return (
