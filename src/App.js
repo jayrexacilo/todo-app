@@ -8,8 +8,8 @@ class App extends Component {
 	constructor() {
 		super();
 		this.state = {
-      todos: ['Dapibus ac facilisis in', 'Morbi leo risus', 'Porta ac consectetur ac'],
-      doneTodos: ['Dapibus ac facilisis in', 'Morbi leo risus', 'Porta ac consectetur ac']
+      todos: [],
+      doneTodos: []
 		}
   }
   
@@ -19,17 +19,51 @@ class App extends Component {
     this.setState(todos);
 	}
 	
-	handleDeleteItem(item, obj) {
-		if(obj === 'todos') {
-			let updatedItems = this.state.todos.filter((val, index) => {
-				return item !== val;
-			});
-			this.setState({todos: updatedItems});
-		} else if(obj === 'doneTodos') {
-			let updatedItems = this.state.doneTodos.filter((val, index) => {
-				return item !== val;
-			});
-			this.setState({doneTodos: updatedItems});
+	handleDeleteItem(item, state) {
+		let updatedItems;
+
+		switch(state) {
+			case 'todos':
+				updatedItems = this.state.todos.filter((val, index) => {
+					return item !== val;
+				});
+				this.setState({todos: updatedItems});
+				break;
+			case 'doneTodos':
+				updatedItems = this.state.doneTodos.filter((val, index) => {
+					return item !== val;
+				});
+				this.setState({doneTodos: updatedItems});
+				break;
+			default:
+				return false;
+		}
+	}
+
+	handleMoveItem(item, state) {
+		let updatedItems;
+
+		switch(state) {
+			case 'todos':
+				let doneTodos = this.state.doneTodos;
+				updatedItems = this.state.todos.filter((val, index) => {
+					return item !== val;
+				});
+				this.setState({todos: updatedItems});
+				doneTodos.push(item);
+				this.setState({doneTodos: doneTodos});
+				break;
+			case 'doneTodos':
+				let todos = this.state.todos;
+				updatedItems = this.state.doneTodos.filter((val, index) => {
+					return item !== val;
+				});
+				this.setState({doneTodos: updatedItems});
+				todos.push(item);
+				this.setState({todos: todos});
+				break;
+			default:
+				return false;
 		}
 	}
 
@@ -38,8 +72,8 @@ class App extends Component {
 			<div className="App container">
         <div className="row"><div className="col mt-3 text-center"><h1 className="h3">Todo App</h1></div></div>
 				<AddTodo addTodo={this.handleAddTodo.bind(this)}/>
-				<Todos todos={this.state.todos} onDelete={this.handleDeleteItem.bind(this)} />
-        <DoneTodos doneTodos={this.state.doneTodos} onDelete={this.handleDeleteItem.bind(this)} />
+				<Todos todos={this.state.todos} onDelete={this.handleDeleteItem.bind(this)} onMoveItem={this.handleMoveItem.bind(this)}/>
+        <DoneTodos doneTodos={this.state.doneTodos} onDelete={this.handleDeleteItem.bind(this)} onMoveItem={this.handleMoveItem.bind(this)} />
 			</div>
 		);
 	}

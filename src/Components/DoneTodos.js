@@ -5,12 +5,15 @@ class Todos extends Component {
     deleteItem(item) {
         this.props.onDelete(item, 'doneTodos');
     }
+    moveItem(item) {
+        this.props.onMoveItem(item, 'doneTodos');
+    }
     render() {
         let doneTodoItems;
         if(this.props.doneTodos) {
             doneTodoItems = this.props.doneTodos.map((doneTodo, i) => {
                 return (
-                    <DoneItem key={i} doneTodo={doneTodo} onDelete={this.deleteItem.bind(this)} />
+                    <DoneItem key={i} doneTodo={doneTodo} onDelete={this.deleteItem.bind(this)} onMoveItem={this.moveItem.bind(this)} />
                 );
             });
         }
