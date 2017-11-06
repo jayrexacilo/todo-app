@@ -17,15 +17,29 @@ class App extends Component {
     let todos = this.state.todos;
     todos.push(todo);
     this.setState(todos);
-  }
+	}
+	
+	handleDeleteItem(item, obj) {
+		if(obj === 'todos') {
+			let updatedItems = this.state.todos.filter((val, index) => {
+				return item !== val;
+			});
+			this.setState({todos: updatedItems});
+		} else if(obj === 'doneTodos') {
+			let updatedItems = this.state.doneTodos.filter((val, index) => {
+				return item !== val;
+			});
+			this.setState({doneTodos: updatedItems});
+		}
+	}
 
 	render() {
 		return (
 			<div className="App container">
         <div className="row"><div className="col mt-3 text-center"><h1 className="h3">Todo App</h1></div></div>
 				<AddTodo addTodo={this.handleAddTodo.bind(this)}/>
-				<Todos todos={this.state.todos}/>
-        <DoneTodos doneTodos={this.state.doneTodos} />
+				<Todos todos={this.state.todos} onDelete={this.handleDeleteItem.bind(this)} />
+        <DoneTodos doneTodos={this.state.doneTodos} onDelete={this.handleDeleteItem.bind(this)} />
 			</div>
 		);
 	}

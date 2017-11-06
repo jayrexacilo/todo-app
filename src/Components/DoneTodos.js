@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import DoneItem from './DoneItem';
 
 class Todos extends Component {
+    deleteItem(item) {
+        this.props.onDelete(item, 'doneTodos');
+    }
     render() {
         let doneTodoItems;
         if(this.props.doneTodos) {
             doneTodoItems = this.props.doneTodos.map((doneTodo, i) => {
                 return (
-                    <DoneItem key={i} doneTodo={doneTodo} />
+                    <DoneItem key={i} doneTodo={doneTodo} onDelete={this.deleteItem.bind(this)} />
                 );
             });
         }
