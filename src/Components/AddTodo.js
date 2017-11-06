@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
+import uuid from 'uuid';
 
 class AddTodo extends Component {
     constructor() {
         super();
         this.state = {
-            newTodo: ''
+            newTodo: {}
         };
     }
     handleSubmit(e) {
-        if(this.refs.todoItem.value === '') {
-            alert('It should not be empty when submitting');
-        } else {
-            this.setState({newTodo: this.refs.todoItem.value}, function() {
-                this.props.addTodo(this.refs.todoItem.value);
+		if(this.refs.todoItem.value === '') {
+			alert('It should not be empty when submitting');
+		} else {
+			this.setState({newTodo:{
+				id: uuid.v4(),
+				todoItem: this.refs.todoItem.value
+			}}, function(){
+                this.props.addTodo(this.state.newTodo);
                 this.refs.todoItem.value = '';
-            });
-        }
-        e.preventDefault();
-    }
+			});
+		}
+		e.preventDefault();
+	}
     render() {
         return (
             <div>

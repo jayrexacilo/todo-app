@@ -13,25 +13,25 @@ class App extends Component {
 		}
   }
   
-  handleAddTodo(todo) {
+  handleAddTodo(item) {
     let todos = this.state.todos;
-    todos.push(todo);
-    this.setState(todos);
+		todos.push(item);
+		this.setState({todos: todos});
 	}
 	
-	handleDeleteItem(item, state) {
+	handleDeleteItem(id, state) {
 		let updatedItems;
 
 		switch(state) {
 			case 'todos':
 				updatedItems = this.state.todos.filter((val, index) => {
-					return item !== val;
+					return id !== val.id;
 				});
 				this.setState({todos: updatedItems});
 				break;
 			case 'doneTodos':
 				updatedItems = this.state.doneTodos.filter((val, index) => {
-					return item !== val;
+					return id !== val.id;
 				});
 				this.setState({doneTodos: updatedItems});
 				break;
@@ -47,7 +47,7 @@ class App extends Component {
 			case 'todos':
 				let doneTodos = this.state.doneTodos;
 				updatedItems = this.state.todos.filter((val, index) => {
-					return item !== val;
+					return item.id !== val.id;
 				});
 				this.setState({todos: updatedItems});
 				doneTodos.push(item);
@@ -56,7 +56,7 @@ class App extends Component {
 			case 'doneTodos':
 				let todos = this.state.todos;
 				updatedItems = this.state.doneTodos.filter((val, index) => {
-					return item !== val;
+					return item.id !== val.id;
 				});
 				this.setState({doneTodos: updatedItems});
 				todos.push(item);
@@ -65,6 +65,10 @@ class App extends Component {
 			default:
 				return false;
 		}
+	}
+
+	componentDidUpdate() {
+		console.log(this.state);
 	}
 
 	render() {

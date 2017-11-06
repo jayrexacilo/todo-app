@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import TodoItem from './TodoItem';
 
 class Todos extends Component {
-    deleteItem(item) {
-        this.props.onDelete(item, 'todos');
+    deleteItem(id) {
+        this.props.onDelete(id, 'todos');
     }
     moveItem(item) {
         this.props.onMoveItem(item, 'todos');
