@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import uuid from 'uuid';
 import Todos from './Components/Todos';
 import DoneTodos from './Components/DoneTodos';
 import AddTodo from './Components/AddTodo';
@@ -8,15 +9,19 @@ class App extends Component {
 	constructor() {
 		super();
 		this.state = {
-      todos: [],
-      doneTodos: []
+			todos: [],
+			doneTodos: []
 		}
-  }
+	}
   
-  handleAddTodo(item) {
-    let todos = this.state.todos;
-		todos.push(item);
+	handleAddTodo(item) {
+		if(!item.value) {
+			return alert('Please fill the input');
+		}
+		let todos = this.state.todos;
+		todos.push({id: uuid.v4(), todoItem: item.value});
 		this.setState({todos: todos});
+		item.value = '';
 	}
 	
 	handleDeleteItem(id, state) {
@@ -68,16 +73,16 @@ class App extends Component {
 	}
 
 	componentDidUpdate() {
-		console.log(this.state);
+		console.log('todos: ',this.state.todos, "\n", 'doneTodos: ', this.state.doneTodos);
 	}
 
 	render() {
 		return (
 			<div className="App container">
-        <div className="row"><div className="col mt-3 text-center"><h1 className="h3">Todo App</h1></div></div>
-				<AddTodo addTodo={this.handleAddTodo.bind(this)}/>
-				<Todos todos={this.state.todos} onDelete={this.handleDeleteItem.bind(this)} onMoveItem={this.handleMoveItem.bind(this)}/>
-        <DoneTodos doneTodos={this.state.doneTodos} onDelete={this.handleDeleteItem.bind(this)} onMoveItem={this.handleMoveItem.bind(this)} />
+				<div className="row"><div className="col mt-3 text-center"><h1 className="h3">Todo App</h1></div></div>
+					<AddTodo addTodo={this.handleAddTodo.bind(this)}/>
+					<Todos todos={this.state.todos} onDelete={this.handleDeleteItem.bind(this)} onMoveItem={this.handleMoveItem.bind(this)}/>
+					<DoneTodos doneTodos={this.state.doneTodos} onDelete={this.handleDeleteItem.bind(this)} onMoveItem={this.handleMoveItem.bind(this)} />
 			</div>
 		);
 	}
