@@ -11,17 +11,19 @@ const DoneTodos = props => {
         >
           {doneTodo.todoItem}
           <div className="btn-toolbar float-right">
-            <button className="btn btn-light update">
+            <button className="btn btn-light edit" title="Edit">
               <i className="fa fa-pencil-square-o" aria-hidden="true" />
             </button>
             <button
               className="btn btn-success done"
+              title="Undone"
               onClick={props.onMoveItem.bind(this, doneTodo, "doneTodos")}
             >
-              <i className="fa fa-check-square-o" aria-hidden="true" />
+              <i class="fa fa-undo" aria-hidden="true" />
             </button>
             <button
               className="btn btn-danger delete"
+              title="Delete"
               onClick={props.onDelete.bind(this, doneTodo.id, "doneTodos")}
             >
               <i className="fa fa-trash-o" aria-hidden="true" />
