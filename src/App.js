@@ -127,6 +127,7 @@ class App extends Component {
           doneTodos={this.state.doneTodos}
           onDelete={this.handleDeleteItem.bind(this)}
           onMoveItem={this.handleMoveItem.bind(this)}
+          onEdit={this.handleEdit.bind(this)}
         />
       </div>
     );
