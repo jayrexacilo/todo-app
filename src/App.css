@@ -1,3 +1,9 @@
-.done, .delete {
-  font-size: 0.6rem;
+.done,
+.delete,
+.update {
+  font-size: 0.8rem;
+}
+
+.list-group-item {
+  line-height: 33px;
 }
