@@ -3,9 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  NavLink,
-  withRouter,
-  Redirect
+  NavLink
 } from "react-router-dom";
 import uuid from "uuid";
 import Todos from "./Components/Todos";
@@ -23,97 +21,38 @@ class App extends Component {
   }
 
   handleAddTodo(item) {
+    const todos = this.state.todos;
+
     if (!item) {
       return alert("Please fill the input");
     }
-    let todos = this.state.todos;
     todos.push({ id: uuid.v4(), todoItem: item });
     this.setState({ todos: todos });
   }
 
   handleDeleteItem(id, state) {
-    let updatedItems;
-
-    switch (state) {
-      case "todos":
-        updatedItems = this.state.todos.filter((val, index) => {
-          return id !== val.id;
-        });
-        this.setState({ todos: updatedItems });
-        break;
-      case "doneTodos":
-        updatedItems = this.state.doneTodos.filter((val, index) => {
-          return id !== val.id;
-        });
-        this.setState({ doneTodos: updatedItems });
-        break;
-      default:
-        return false;
-    }
+    const updatedItems = this.state[state].filter(val => id !== val.id);
+    this.setState({ [state]: updatedItems });
   }
 
   handleMoveItem(item, state) {
-    let updatedItems;
+    const moveTo = state === "todos" ? "doneTodos" : "todos";
+    const items = this.state[moveTo];
+    const updatedItems = this.state[state].filter(val => item.id !== val.id);
 
-    switch (state) {
-      case "todos":
-        let doneTodos = this.state.doneTodos;
-        updatedItems = this.state.todos.filter((val, index) => {
-          return item.id !== val.id;
-        });
-        this.setState({ todos: updatedItems });
-        doneTodos.push(item);
-        this.setState({ doneTodos: doneTodos });
-        break;
-      case "doneTodos":
-        let todos = this.state.todos;
-        updatedItems = this.state.doneTodos.filter((val, index) => {
-          return item.id !== val.id;
-        });
-        this.setState({ doneTodos: updatedItems });
-        todos.push(item);
-        this.setState({ todos: todos });
-        break;
-      default:
-        return false;
-    }
+    this.setState({ [state]: updatedItems });
+    items.push(item);
+    this.setState({ [moveTo]: items });
   }
 
   handleEdit(id, item, state) {
-    let updatedItems;
-
-    switch (state) {
-      case "todos":
-        updatedItems = this.state.todos.map(todo => {
-          if (id === todo.id) {
-            todo.todoItem = item;
-          }
-          return todo;
-        });
-        this.setState({ todos: updatedItems });
-        break;
-      case "doneTodos":
-        updatedItems = this.state.doneTodos.map(todo => {
-          if (id === todo.id) {
-            todo.todoItem = item;
-          }
-          return todo;
-        });
-        this.setState({ doneTodos: updatedItems });
-        break;
-      default:
-        return false;
-    }
-  }
-
-  componentDidUpdate() {
-    console.log(
-      "todos: ",
-      this.state.todos,
-      "\n",
-      "doneTodos: ",
-      this.state.doneTodos
-    );
+    const updatedItems = this.state[state].map(todo => {
+      if (id === todo.id) {
+        todo.todoItem = item;
+      }
+      return todo;
+    });
+    this.setState({ [state]: updatedItems });
   }
 
   render() {
@@ -137,11 +76,6 @@ class App extends Component {
         />
       );
     };
-
-    const test = withRouter(({ match, location, history }) => {
-      console.log(location.pathname, location.state);
-      return false;
-    });
 
     return (
       <Router>
