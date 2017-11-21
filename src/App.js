@@ -1,4 +1,12 @@
 import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  NavLink,
+  withRouter,
+  Redirect
+} from "react-router-dom";
 import uuid from "uuid";
 import Todos from "./Components/Todos";
 import DoneTodos from "./Components/DoneTodos";
@@ -109,27 +117,57 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div className="App container">
-        <div className="row">
-          <div className="col mt-3 text-center">
-            <h1 className="h3">Todo App</h1>
-          </div>
-        </div>
-        <AddTodo addTodo={this.handleAddTodo.bind(this)} />
+    const myTodos = props => {
+      return (
         <Todos
           todos={this.state.todos}
           onDelete={this.handleDeleteItem.bind(this)}
           onMoveItem={this.handleMoveItem.bind(this)}
           onEdit={this.handleEdit.bind(this)}
         />
+      );
+    };
+    const myDoneTodos = props => {
+      return (
         <DoneTodos
           doneTodos={this.state.doneTodos}
           onDelete={this.handleDeleteItem.bind(this)}
           onMoveItem={this.handleMoveItem.bind(this)}
           onEdit={this.handleEdit.bind(this)}
         />
-      </div>
+      );
+    };
+
+    const test = withRouter(({ match, location, history }) => {
+      console.log(location.pathname, location.state);
+      return false;
+    });
+
+    return (
+      <Router>
+        <div className="App container">
+          <div className="row">
+            <div className="col mt-3 text-center">
+              <h1 className="h3">Todo App</h1>
+            </div>
+          </div>
+          <AddTodo addTodo={this.handleAddTodo.bind(this)} />
+
+          <div className="btn-group d-flex justify-content-center" role="group">
+            <NavLink exact to="/" className="btn btn-light">
+              Todos
+            </NavLink>
+            <NavLink to="/doneTodos" className="btn btn-light">
+              Done Todos
+            </NavLink>
+          </div>
+          <hr />
+          <Switch>
+            <Route exact path="/" component={myTodos} />
+            <Route exact path="/doneTodos" component={myDoneTodos} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
