@@ -52,7 +52,7 @@ class Todos extends Component {
       });
     }
     return (
-      <div className="row my-4">
+      <div className="row">
         <div className="col-md-2" />
         <div className="col-md-8 todos">
           <h1 className="h5">Todo Items</h1>
