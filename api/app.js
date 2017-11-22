@@ -1,17 +1,22 @@
 const express = require("express");
 const logger = require("morgan");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+
+mongoose.Promise = global.Promise;
+mongoose.connect("mongodb://localhost/api");
 
 const app = express();
 
+// Routes
+const todos = require("./routes/todos");
+
 // Middlewares
 app.use(logger("dev"));
+app.use(bodyParser.json());
 
 // Routes
-app.get("/", (req, res, next) => {
-  res.status(200).json({
-    message: "You requested index page"
-  });
-});
+app.use("/todos", todos);
 
 // Catch 404 Errors and forward them to error handler
 app.use((req, res, next) => {
