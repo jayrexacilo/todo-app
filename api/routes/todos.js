@@ -11,7 +11,7 @@ router
 
 router.route("/todo").get(TodosController.getTodo);
 router.route("/done").get(TodosController.getDoneTodo);
-router.route("/put/:todoID").put(TodosController.replaceTodo);
+router.route("/put").put(TodosController.replaceTodo);
 router.route("/patch/:todoID").patch(TodosController.editTodo);
 router.route("/delete/:todoID").delete(TodosController.deleteTodo);
 

@@ -78,12 +78,24 @@ class App extends Component {
 
   handleMoveItem(item, state) {
     const moveTo = state === "todos" ? "doneTodos" : "todos";
+    const done = state === "todos" ? (item.done = true) : (item.done = false);
     const items = this.state[moveTo];
-    const updatedItems = this.state[state].filter(val => item.id !== val.id);
 
-    this.setState({ [state]: updatedItems });
-    items.push(item);
-    this.setState({ [moveTo]: items });
+    axios
+      .put("http://localhost:9000/todos/put/", item)
+      .then(response => {
+        const updatedItems = this.state[state].filter(
+          val => item._id !== val._id
+        );
+
+        this.setState({ [state]: updatedItems });
+        items.push(item);
+        this.setState({ [moveTo]: items });
+        console.log(response);
+      })
+      .catch(error => {
+        throw error;
+      });
   }
 
   handleEdit(id, item, state) {

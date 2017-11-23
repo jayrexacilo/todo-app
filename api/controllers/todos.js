@@ -20,9 +20,8 @@ module.exports = {
   },
   replaceTodo: async (req, res, next) => {
     // enforce that req.body must contain all the fields
-    const { todoID } = req.params;
-    const newTodo = req.body;
-    const result = await Todo.findByIdAndUpdate(todoID, newTodo);
+    const { _id } = req.body;
+    const result = await Todo.findByIdAndUpdate(_id, req.body);
     res.status(200).json({ success: true });
   },
   editTodo: async (req, res, next) => {
