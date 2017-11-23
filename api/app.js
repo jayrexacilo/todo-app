@@ -12,6 +12,21 @@ const app = express();
 const todos = require("./routes/todos");
 
 // Middlewares
+
+// Add headers
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
+  );
+  next();
+});
+
 app.use(logger("dev"));
 app.use(bodyParser.json());
 
