@@ -5,10 +5,12 @@ class DoneTodos extends Component {
   dataChanged = this.dataChanged.bind(this);
 
   dataChanged(data) {
-    let id = Object.keys(data)[0];
-    let editedItem = data[Object.keys(data)];
+    const item = {
+      _id: Object.keys(data)[0],
+      todoName: data[Object.keys(data)]
+    };
 
-    this.props.onEdit(id, editedItem, "doneTodos");
+    this.props.onEdit(item, "doneTodos");
   }
 
   customValidateText(text) {

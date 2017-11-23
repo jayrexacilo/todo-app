@@ -26,9 +26,8 @@ module.exports = {
   },
   editTodo: async (req, res, next) => {
     // req.body may contain any number of fields
-    const { todoID } = req.params;
-    const newTodo = req.body;
-    const result = await Todo.findByIdAndUpdate(todoID, newTodo);
+    const { _id } = req.body;
+    const result = await Todo.findByIdAndUpdate(_id, req.body);
     res.status(200).json({ success: true });
   },
   deleteTodo: async (req, res, next) => {

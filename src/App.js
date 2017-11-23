@@ -29,7 +29,7 @@ class App extends Component {
         this.setState({ todos: data });
       })
       .catch(error => {
-        throw error;
+        alert("There's something wrong, reload page and try again.");
       });
 
     axios
@@ -39,7 +39,7 @@ class App extends Component {
         this.setState({ doneTodos: data });
       })
       .catch(error => {
-        throw error;
+        alert("There's something wrong, reload page and try again.");
       });
   }
 
@@ -60,7 +60,7 @@ class App extends Component {
         this.setState({ todos: todos });
       })
       .catch(error => {
-        throw error;
+        alert("There's something wrong, reload page and try again.");
       });
   }
 
@@ -72,7 +72,7 @@ class App extends Component {
         this.setState({ [state]: updatedItems });
       })
       .catch(error => {
-        throw error;
+        alert("There's something wrong, reload page and try again.");
       });
   }
 
@@ -94,18 +94,27 @@ class App extends Component {
         console.log(response);
       })
       .catch(error => {
-        throw error;
+        alert("There's something wrong, reload page and try again.");
       });
   }
 
-  handleEdit(id, item, state) {
-    const updatedItems = this.state[state].map(todo => {
-      if (id === todo.id) {
-        todo.todoItem = item;
-      }
-      return todo;
-    });
-    this.setState({ [state]: updatedItems });
+  handleEdit(item, state) {
+    const { _id, todoName } = item;
+    axios
+      .patch("http://localhost:9000/todos/patch/", item)
+      .then(response => {
+        const updatedItems = this.state[state].map(todo => {
+          if (_id === todo._id) {
+            todo.todoName = todoName;
+          }
+          return todo;
+        });
+        this.setState({ [state]: updatedItems });
+      })
+      .catch(error => {
+        alert("There's something wrong, reload page and try again.");
+      });
+    console.log(item);
   }
 
   render() {
