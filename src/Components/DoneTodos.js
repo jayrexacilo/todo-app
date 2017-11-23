@@ -18,6 +18,7 @@ class DoneTodos extends Component {
     let doneTodoItems;
     if (this.props.doneTodos) {
       doneTodoItems = this.props.doneTodos.map((doneTodo, i) => {
+        const { _id, todoName } = doneTodo;
         return (
           <li
             key={i}
@@ -26,8 +27,8 @@ class DoneTodos extends Component {
             <InlineEdit
               validate={this.customValidateText}
               activeClassName="editing"
-              text={doneTodo.todoItem}
-              paramName={doneTodo.id}
+              text={todoName}
+              paramName={_id}
               change={this.dataChanged}
             />
             <div className="btn-toolbar float-right">

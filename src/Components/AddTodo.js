@@ -3,19 +3,19 @@ import React, { Component } from "react";
 class AddTodo extends Component {
   constructor(props) {
     super(props);
-    this.state = { todoItem: "" };
+    this.state = { todoName: "" };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ todoItem: event.target.value });
+    this.setState({ todoName: event.target.value });
   }
 
   handleSubmit(event) {
-    this.props.addTodo(this.state.todoItem);
-    this.setState({ todoItem: "" });
+    this.props.addTodo(this.state.todoName);
+    this.setState({ todoName: "" });
     event.target.addNewTodo.value = "";
     event.preventDefault();
   }

@@ -19,6 +19,7 @@ class Todos extends Component {
     let todoItems;
     if (this.props.todos) {
       todoItems = this.props.todos.map((todo, i) => {
+        const { _id, todoName } = todo;
         return (
           <li
             key={i}
@@ -27,8 +28,8 @@ class Todos extends Component {
             <InlineEdit
               validate={this.customValidateText}
               activeClassName="editing"
-              text={todo.todoItem}
-              paramName={todo.id}
+              text={todoName}
+              paramName={_id}
               change={this.dataChanged}
             />
             <div className="btn-toolbar float-right">
@@ -42,7 +43,7 @@ class Todos extends Component {
               <button
                 className="btn btn-danger delete"
                 title="Delete"
-                onClick={this.props.onDelete.bind(this, todo.id, "todos")}
+                onClick={this.props.onDelete.bind(this, _id, "todos")}
               >
                 <i className="fa fa-trash-o" aria-hidden="true" />
               </button>

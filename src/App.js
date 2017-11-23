@@ -5,7 +5,7 @@ import {
   Route,
   NavLink
 } from "react-router-dom";
-import uuid from "uuid";
+import axios from "axios";
 import Todos from "./Components/Todos";
 import DoneTodos from "./Components/DoneTodos";
 import AddTodo from "./Components/AddTodo";
@@ -18,6 +18,29 @@ class App extends Component {
       todos: [],
       doneTodos: []
     };
+    this.fetchDatasfromTodosAPI();
+  }
+
+  fetchDatasfromTodosAPI() {
+    axios
+      .get("http://localhost:9000/todos/todo")
+      .then(response => {
+        const { data } = response;
+        this.setState({ todos: data });
+      })
+      .catch(error => {
+        throw error;
+      });
+
+    axios
+      .get("http://localhost:9000/todos/done")
+      .then(response => {
+        const { data } = response;
+        this.setState({ doneTodos: data });
+      })
+      .catch(error => {
+        throw error;
+      });
   }
 
   handleAddTodo(item) {
@@ -26,8 +49,22 @@ class App extends Component {
     if (!item) {
       return alert("Please fill the input");
     }
-    todos.push({ id: uuid.v4(), todoItem: item });
-    this.setState({ todos: todos });
+    axios
+      .post("http://localhost:9000/todos/", {
+        todoName: item,
+        done: false
+      })
+      .then(response => {
+        const { data } = response;
+        if (!data.success) {
+          throw new Error("Something is wrong, please try again");
+        }
+        todos.push({ _id: data._id, todoName: item });
+        this.setState({ todos: todos });
+      })
+      .catch(error => {
+        throw error;
+      });
   }
 
   handleDeleteItem(id, state) {
