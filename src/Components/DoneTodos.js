@@ -46,11 +46,7 @@ class DoneTodos extends Component {
               <button
                 className="btn btn-danger delete"
                 title="Delete"
-                onClick={this.props.onDelete.bind(
-                  this,
-                  doneTodo.id,
-                  "doneTodos"
-                )}
+                onClick={this.props.onDelete.bind(this, _id, "doneTodos")}
               >
                 <i className="fa fa-trash-o" aria-hidden="true" />
               </button>
