@@ -56,9 +56,6 @@ class App extends Component {
       })
       .then(response => {
         const { data } = response;
-        if (!data.success) {
-          throw new Error("Something is wrong, please try again");
-        }
         todos.push({ _id: data._id, todoName: item });
         this.setState({ todos: todos });
       })
@@ -68,8 +65,15 @@ class App extends Component {
   }
 
   handleDeleteItem(id, state) {
-    const updatedItems = this.state[state].filter(val => id !== val.id);
-    this.setState({ [state]: updatedItems });
+    axios
+      .delete(`http://localhost:9000/todos/delete/${id}`)
+      .then(response => {
+        const updatedItems = this.state[state].filter(val => id !== val._id);
+        this.setState({ [state]: updatedItems });
+      })
+      .catch(error => {
+        throw error;
+      });
   }
 
   handleMoveItem(item, state) {
