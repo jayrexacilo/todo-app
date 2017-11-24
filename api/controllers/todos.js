@@ -31,9 +31,8 @@ module.exports = {
     res.status(200).json({ success: true });
   },
   deleteTodo: async (req, res, next) => {
-    const { todoID } = req.params;
-    const removeTodo = req.body;
-    const result = await Todo.findByIdAndRemove(todoID, removeTodo);
+    const { todoID } = req.value.params;
+    const result = await Todo.findByIdAndRemove(todoID);
     res.status(200).json({ success: true });
   }
 };
