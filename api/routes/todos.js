@@ -4,7 +4,11 @@ const router = require("express-promise-router")();
 
 const TodosController = require("../controllers/todos");
 
-const { validateParam, schemas } = require("../helpers/routeHelpers");
+const {
+  validateParam,
+  validateBody,
+  schemas
+} = require("../helpers/routeHelpers");
 
 router
   .route("/")
@@ -13,8 +17,12 @@ router
 
 router.route("/todo").get(TodosController.getTodo);
 router.route("/done").get(TodosController.getDoneTodo);
-router.route("/put").put(TodosController.replaceTodo);
-router.route("/patch/").patch(TodosController.editTodo);
+router
+  .route("/put")
+  .put(validateBody(schemas.todoSchema), TodosController.replaceTodo);
+router
+  .route("/patch/")
+  .patch(validateBody(schemas.todoPatchSchema), TodosController.editTodo);
 router
   .route("/delete/:todoID")
   .delete(

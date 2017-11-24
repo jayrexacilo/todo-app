@@ -20,14 +20,14 @@ module.exports = {
   },
   replaceTodo: async (req, res, next) => {
     // enforce that req.body must contain all the fields
-    const { _id } = req.body;
-    const result = await Todo.findByIdAndUpdate(_id, req.body);
+    const { _id } = req.value.body;
+    const result = await Todo.findByIdAndUpdate(_id, req.value.body);
     res.status(200).json({ success: true });
   },
   editTodo: async (req, res, next) => {
     // req.body may contain any number of fields
-    const { _id } = req.body;
-    const result = await Todo.findByIdAndUpdate(_id, req.body);
+    const { _id } = req.value.body;
+    const result = await Todo.findByIdAndUpdate(_id, req.value.body);
     res.status(200).json({ success: true });
   },
   deleteTodo: async (req, res, next) => {
