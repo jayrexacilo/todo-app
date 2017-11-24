@@ -23,20 +23,13 @@ class App extends Component {
 
   fetchDatasfromTodosAPI() {
     axios
-      .get("http://localhost:9000/todos/todo")
+      .get("http://localhost:9000/todos")
       .then(response => {
         const { data } = response;
-        this.setState({ todos: data });
-      })
-      .catch(error => {
-        alert("There's something wrong, reload page and try again.");
-      });
-
-    axios
-      .get("http://localhost:9000/todos/done")
-      .then(response => {
-        const { data } = response;
-        this.setState({ doneTodos: data });
+        const todos = data.filter(val => !val.done);
+        const done = data.filter(val => val.done);
+        this.setState({ todos: todos });
+        this.setState({ doneTodos: done });
       })
       .catch(error => {
         alert("There's something wrong, reload page and try again.");
