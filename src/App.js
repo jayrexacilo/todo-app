@@ -23,7 +23,7 @@ class App extends Component {
 
   fetchDatasfromTodosAPI() {
     axios
-      .get("http://localhost:9000/todos")
+      .get("https://todo-app-kaizen.herokuapp.com/todos")
       .then(response => {
         const { data } = response;
         const todos = data.filter(val => !val.done);
@@ -43,7 +43,7 @@ class App extends Component {
       return alert("Please fill the input");
     }
     axios
-      .post("http://localhost:9000/todos/", {
+      .post("https://todo-app-kaizen.herokuapp.com/todos/", {
         todoName: item,
         done: false
       })
@@ -59,7 +59,7 @@ class App extends Component {
 
   handleDeleteItem(id, state) {
     axios
-      .delete(`http://localhost:9000/todos/delete/${id}`)
+      .delete(`https://todo-app-kaizen.herokuapp.com/todos/delete/${id}`)
       .then(response => {
         const updatedItems = this.state[state].filter(val => id !== val._id);
         this.setState({ [state]: updatedItems });
@@ -75,7 +75,7 @@ class App extends Component {
     const items = this.state[moveTo];
 
     axios
-      .put("http://localhost:9000/todos/put/", item)
+      .put("https://todo-app-kaizen.herokuapp.com/todos/put/", item)
       .then(response => {
         const updatedItems = this.state[state].filter(
           val => item._id !== val._id
@@ -94,7 +94,7 @@ class App extends Component {
   handleEdit(item, state) {
     const { _id, todoName } = item;
     axios
-      .patch("http://localhost:9000/todos/patch/", item)
+      .patch("https://todo-app-kaizen.herokuapp.com/todos/patch/", item)
       .then(response => {
         const updatedItems = this.state[state].map(todo => {
           if (_id === todo._id) {
