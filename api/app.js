@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/api");
+mongoose.connect(
+  "mongodb://todo-app-kaizen:todoAppKaizen@cluster0-shard-00-00-gtwrw.mongodb.net:27017,cluster0-shard-00-01-gtwrw.mongodb.net:27017,cluster0-shard-00-02-gtwrw.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin"
+);
 
 const app = express();
 
@@ -15,7 +17,10 @@ const todos = require("./routes/todos");
 
 // Add headers
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://todo-app-kaizen.herokuapp.com/");
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://todo-app-kaizen.herokuapp.com/"
+  );
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, PATCH, DELETE"
@@ -57,5 +62,5 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server
-const port = app.get("port") || 9000;
+const port = app.get("port") || 27017;
 app.listen(port, () => console.log(`Server is listening on port ${port}`));
